@@ -1,0 +1,8 @@
+[console_scripts]
+evo = evo.cli.evo_main:main
+evo_ape = evo.cli.entry_points:ape
+evo_config = evo.cli.config:main
+evo_ipython = evo.cli.ipython:main
+evo_res = evo.cli.entry_points:res
+evo_rpe = evo.cli.entry_points:rpe
+evo_traj = evo.cli.entry_points:traj

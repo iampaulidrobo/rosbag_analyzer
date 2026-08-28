@@ -1,0 +1,156 @@
+{
+  "name": "pauli-rosbag-analyzer",
+  "displayName": "Pauli's Rosbag Analyzer",
+  "description": "Inspect rosbags, plot topics, and measure trajectory accuracy without a ROS installation.",
+  "version": "0.1.6",
+  "publisher": "pauli",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Data Science",
+    "Visualization",
+    "Other"
+  ],
+  "keywords": [
+    "ros",
+    "ros2",
+    "rosbag",
+    "robotics",
+    "odometry"
+  ],
+  "icon": "media/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-name/rosbag-analyzer-vscode"
+  },
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onLanguage:csv"
+  ],
+  "contributes": {
+    "customEditors": [
+      {
+        "viewType": "rosbagAnalyzer.editor",
+        "displayName": "Rosbag Analyzer",
+        "selector": [
+          {
+            "filenamePattern": "*.bag"
+          },
+          {
+            "filenamePattern": "*.db3"
+          },
+          {
+            "filenamePattern": "*.mcap"
+          }
+        ],
+        "priority": "default"
+      }
+    ],
+    "commands": [
+      {
+        "command": "rosbagAnalyzer.open",
+        "title": "Open Analyzer",
+        "category": "Rosbag",
+        "icon": "$(graph)"
+      },
+      {
+        "command": "rosbagAnalyzer.openFile",
+        "title": "Open in Rosbag Analyzer",
+        "category": "Rosbag"
+      },
+      {
+        "command": "rosbagAnalyzer.showTopics",
+        "title": "Show Topics",
+        "category": "Rosbag"
+      },
+      {
+        "command": "rosbagAnalyzer.checkEnvironment",
+        "title": "Check Python Environment",
+        "category": "Rosbag"
+      },
+      {
+        "command": "rosbagAnalyzer.chooseInterpreter",
+        "title": "Choose Python Interpreter",
+        "category": "Rosbag"
+      },
+      {
+        "command": "rosbagAnalyzer.restartBridge",
+        "title": "Restart Bag Reader",
+        "category": "Rosbag"
+      },
+      {
+        "command": "rosbagAnalyzer.showLog",
+        "title": "Show Log",
+        "category": "Rosbag"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "rosbagAnalyzer.openFile",
+          "when": "false"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "rosbagAnalyzer.openFile",
+          "when": "resourceExtname =~ /\\.(bag|db3|mcap|csv|tsv|tum)$/",
+          "group": "navigation@20"
+        },
+        {
+          "command": "rosbagAnalyzer.showTopics",
+          "when": "resourceExtname =~ /\\.(bag|db3|mcap)$/",
+          "group": "navigation@21"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "rosbagAnalyzer.openFile",
+          "when": "resourceExtname =~ /\\.(csv|tsv|tum)$/",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Rosbag Analyzer",
+      "properties": {
+        "rosbagAnalyzer.pythonPath": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Python interpreter used to read bags. Leave empty to use the interpreter selected by the Python extension, then fall back to `python3` on the path. The interpreter needs `rosbags`, `pandas` and `numpy` installed."
+        },
+        "rosbagAnalyzer.maxPlotPoints": {
+          "type": "integer",
+          "default": 20000,
+          "minimum": 500,
+          "maximum": 500000,
+          "description": "Points kept per series when drawing. Longer series are thinned by a fixed stride."
+        },
+        "rosbagAnalyzer.openBagsInAnalyzer": {
+          "type": "boolean",
+          "default": true,
+          "description": "Open .bag, .db3 and .mcap files in the analyzer instead of the binary editor."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run vendor && npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "vendor": "node scripts/vendor.mjs",
+    "lint": "tsc --noEmit -p ./",
+    "package": "vsce package",
+    "test": "python3 tests/make_fixtures.py && python3 tests/test_bridge.py && node tests/test_webview.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.9.2",
+    "jsdom": "^24.0.0",
+    "plotly.js-dist-min": "^2.29.1",
+    "typescript": "^5.4.0"
+  }
+}

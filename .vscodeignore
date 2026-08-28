@@ -1,0 +1,21 @@
+*.bag
+*.db3
+*.bag.active
+
+.venv/
+venv/
+**/__pycache__/
+**/__pycache__/**
+*.pyc
+.git/
+.git/**
+.vscode/
+node_modules/
+tests/
+*.log
+
+# Compiled to out/*.js by vscode:prepublish — the .ts sources and build-only
+# scripts don't need to ship in the packaged .vsix.
+src/**
+tsconfig.json
+scripts/**

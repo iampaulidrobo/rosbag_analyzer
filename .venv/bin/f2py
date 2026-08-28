@@ -1,0 +1,8 @@
+#!/bin/sh
+'''exec' /home/piyush/Personal/Cloud/01-Personal/00-FollowedUp_work/01-Execution/04-Public_Projects/02-VSCode_Extension/rosbag_analyzer/.venv/bin/python3 "$0" "$@"
+' '''
+import sys
+from numpy.f2py.f2py2e import main
+if __name__ == '__main__':
+    sys.argv[0] = sys.argv[0].removesuffix('.exe')
+    sys.exit(main())
